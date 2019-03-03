@@ -52,21 +52,45 @@ public class WithSpringTest {
 
         //Find the uniques
         Assert.assertNotSame(id2,id3);
+
+        Set idTest = new HashSet<>();
+        idTest.add("881199");
+        idTest.add("881199");
+        idTest.add("881199");
+        idTest.add("881199");
+        idTest.add("881199");
+
+        //Duplicates not allowed
+        Assert.assertEquals(1, idTest.size());
     }
 
     @Test
     public void testCountry() throws Exception{
-        String key1="rsa";
-        String val1="South Africa";
 
-        String key2="usa";
-        String val2="America";
+        Map mapTest = new HashMap();
 
-        mySpring.map(key1,val1);
-        mySpring.map(key2,val2);
+        mapTest.put("rsa", "South Africa");
+        mapTest.put("usa", "America");
+        mapTest.put("aus", "Australia");
 
-        //Check if the values are not null
-        Assert.assertNotNull(val1,val2);
+        //Test if there's 3
+        Assert.assertEquals(3, mapTest.size());
+
+        //New value
+        mapTest.put("rsa", "South America");
+        Assert.assertEquals("South America", mapTest.get("rsa"));
+
+        //Remove key and check size
+        mapTest.remove("rsa");
+        Assert.assertEquals(2, mapTest.size());
+
+        //Check content of map
+        Assert.assertTrue(mapTest.containsKey("usa"));
+        Assert.assertFalse(mapTest.containsKey("ngn"));
+
+        Assert.assertTrue(mapTest.containsValue("America"));
+        Assert.assertFalse(mapTest.containsValue("New Guinnea"));
     }
 }
+
 
